@@ -521,7 +521,7 @@ factor: … | musdc: … | vault code hash: … | DAO: …
 | Risk | Likelihood | Fallback |
 |---|---|---|
 | Global contract tooling breaks | Medium | Per-vault wasm deploy (~1.5–2 NEAR each on testnet) |
-| Sputnik proposal flow slow to wire | Medium | Integration test with sputnikdao2 wasm in sandbox; demo can call accept from a plain DAO-stand-in account, labelled honestly |
+| Sputnik proposal flow slow to wire | Medium | Integration test with sputnikdao2 wasm in sandbox; demo can call accept from a plain DAO-stand-in account, clearly labelled |
 | Testnet RPC flaky during recording | Low-Med | Record the terminal demo early (hour 17) as a backup |
 | UI not finished | Medium | CLI + terminal video; the contracts are the product |
 | Out of time | — | Follow the cut order in §19 |
