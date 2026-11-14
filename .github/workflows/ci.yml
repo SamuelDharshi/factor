@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.95.0
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy,rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: install cargo-near
+        run: cargo install cargo-near --version 0.23.0 --locked
+      - run: make build
+      - run: make lint
+      - run: make test
+  web:
+    runs-on: ubuntu-latest
+    if: hashFiles('web/package.json') != ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: cd web && npm ci && npm run build
