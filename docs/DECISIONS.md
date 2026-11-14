@@ -26,7 +26,7 @@ Deviations from `docs/PRD.md` and the reasons for them. Newest at the bottom of 
 - So per-invoice cost is 0.01 NEAR to the vault, plus the mUSDC storage deposit (0.00125 NEAR) and NFT/invoice storage on factor (Phase 3 measures it). That's far below the PRD's 0.5 NEAR budget.
 
 ## D4. Testnet spending
-The global deploy burns NEAR on every new hash, so we deploy only the **final** vault code to testnet (Phase 5). The Phase 1 keyless/global exit check is proven in sandbox (`tests/tests/spike.rs`). `scripts/deploy_spike.sh` (`make spike`) reproduces it on testnet. Phase 5's real deploy shows the same property on `inv-<id>.factor.<master>` (`list-keys` is empty).
+The global deploy burns NEAR on every new hash, so we deploy only the **final** vault code to testnet (Phase 5). The keyless vault and global-code check is covered by the sandbox integration tests (`tests/tests/integration.rs`). `scripts/deploy_spike.sh` (`make spike`) reproduces it on testnet. Phase 5's real deploy shows the same property on `inv-<id>.factor.<master>` (`list-keys` is empty).
 
 ## D5. Demo accounts share the master key
 alice, bob, carol, council2, council3, factor and musdc are sub-accounts of `MASTER_ACCOUNT`, created with the master's public key (derived from the secret key by `scripts/pubkey.py`). The only secret is `MASTER_PRIVATE_KEY` in `.env`, so a fresh clone can re-run everything. Vaults are the exception: they never get keys.
