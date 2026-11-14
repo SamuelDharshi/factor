@@ -1,0 +1,27 @@
+FACTOR demo  |  factor=factor.fctr6d9bf8.testnet  musdc=musdc.fctr6d9bf8.testnet  dao=fctr6d9bf8-dao.sputnik-v2.testnet
+(testnet only; mUSDC is a mock token; implied APR uses a fixed demo rate of 1 NEAR = 50 mUSDC)
+[1/8] Alice creates invoice #1 for 500 mUSDC to fctr6d9bf8-dao…  tx: 97QimPKqbwYAe2Eae8QqshPjqGQHHQNjQupRHHWTMz9v  🔗 https://testnet.nearblocks.io/txns/97QimPKqbwYAe2Eae8QqshPjqGQHHQNjQupRHHWTMz9v
+      vault inv-1.factor.fctr6d9bf8.testnet  access keys: 0 ✓
+      ✓ vault has 0 access keys
+      ✓ invoice DRAFT, owner alice
+[2/8] Council proposal #0 'accept invoice #1' → 2/3 votes → executed  tx: 8kGfpbUPZZdzgoyVeSXG19WQeBjmEKTsWEmAZm5Ucbe  🔗 https://testnet.nearblocks.io/txns/8kGfpbUPZZdzgoyVeSXG19WQeBjmEKTsWEmAZm5Ucbe
+      ✓ proposal approved
+      ✓ invoice ACCEPTED
+[3/8] Alice lists #1 at 9.5 NEAR (implied APR 77%)  tx: 7JRV8AwRvAcR1Ms9ApkYofVBZTmaBXixmccz3hty1rmq  🔗 https://testnet.nearblocks.io/txns/7JRV8AwRvAcR1Ms9ApkYofVBZTmaBXixmccz3hty1rmq
+      ✓ listed at price
+[4/8] Carol buys #1 → Alice receives 9.5 NEAR  tx: 6Fe9Ar5v67oxXMNL5NBRKeUDqpK9aR8fvvvqSfUhV1vX  🔗 https://testnet.nearblocks.io/txns/6Fe9Ar5v67oxXMNL5NBRKeUDqpK9aR8fvvvqSfUhV1vX
+      ✓ alice received exactly the price
+      ✓ carol owns the NFT
+[5/8] DAO pays 500 mUSDC to inv-1.factor.fctr6d9bf8.testnet → PAID (on time)  tx: B3FcFjCv7jUHqjiwtwLeMKBdpDkHfuHB4ZbmAEF3Q1Rs  🔗 https://testnet.nearblocks.io/txns/B3FcFjCv7jUHqjiwtwLeMKBdpDkHfuHB4ZbmAEF3Q1Rs
+      ✓ invoice PAID on time
+      ✓ vault holds the payment
+[6/8] Alice withdraws → ❌ rejected: NotOwner (expected)  tx: mTh2Pf5oja7aVNC62epE52HxTbfpUDeLZegBWTQfTFG  🔗 https://testnet.nearblocks.io/txns/mTh2Pf5oja7aVNC62epE52HxTbfpUDeLZegBWTQfTFG
+      ✓ rejection reason is ERR_NOT_OWNER
+      ✓ invoice still PAID, funds still in vault
+[7/8] Carol withdraws → ✅ 500 mUSDC received  tx: 9W4B8iQvp74TAgBL8PHDseu3jTMTyPZ294U7iDyycKBk  🔗 https://testnet.nearblocks.io/txns/9W4B8iQvp74TAgBL8PHDseu3jTMTyPZ294U7iDyycKBk
+      ✓ carol received 500 mUSDC
+      ✓ invoice SETTLED, unlocked
+[8/8] fctr6d9bf8-dao payer score: 71/100 — 1/1 on time, accepted 1, volume 500 mUSDC
+      ✓ paid_on_time increased by 1
+
+DEMO PASSED ✅
