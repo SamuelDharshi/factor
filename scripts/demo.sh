@@ -6,8 +6,8 @@ source "$(dirname "$0")/env.sh"
 
 # fixed demo conversion rate used ONLY for the implied-APR display (also labelled in the UI/README)
 RATE_NEAR_PER_MUSDC=0.02      # 1 NEAR = 50 mUSDC
-FACE_MUSDC=500; FACE=$((FACE_MUSDC * 1000000))
-PRICE_NEAR=9.5; DAYS_TO_DUE=25
+FACE_MUSDC=100; FACE=$((FACE_MUSDC * 1000000))
+PRICE_NEAR=1.9; DAYS_TO_DUE=25
 FAILS=0
 check() { # <description> <actual> <expected>
   if [ "$2" = "$3" ]; then echo "      ✓ $1"; else echo "      ✗ $1 (expected '$3', got '$2')"; FAILS=$((FAILS+1)); fi
@@ -96,7 +96,7 @@ CAROL_BEFORE=$(musdc_bal "$CAROL")
 near_tx "$CAROL" "$FACTOR" withdraw "{\"id\":\"$ID\"}" '150 Tgas' '1 yoctoNEAR'
 GOT=$(( $(musdc_bal "$CAROL") - CAROL_BEFORE ))
 step 7 "Carol withdraws → ✅ $((GOT / 1000000)) mUSDC received"
-check "carol received 500 mUSDC" "$GOT" "$FACE"
+check "carol received $FACE_MUSDC mUSDC" "$GOT" "$FACE"
 check "invoice SETTLED, unlocked" "$(inv_field "$ID" status)/$(inv_field "$ID" pending)" "Settled/false"
 
 # ---- 8. Public payer score
