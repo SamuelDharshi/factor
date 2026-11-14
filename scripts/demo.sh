@@ -37,6 +37,12 @@ echo "(testnet only; mUSDC is a mock token; implied APR uses a fixed demo rate o
 # ---- setup that is not part of the story (idempotent): carol must be registered to receive mUSDC
 near_tx "$M" "$MUSDC" storage_deposit "{\"account_id\":\"$CAROL\",\"registration_only\":true}" '30 Tgas' '0.0125 NEAR'
 near_tx "$M" "$MUSDC" storage_deposit "{\"account_id\":\"$ALICE\",\"registration_only\":true}" '30 Tgas' '0.0125 NEAR'
+# keep the buyer solvent: each run moves PRICE_NEAR from carol to alice, so top carol up from alice when low
+NEED=$(python3 -c "print(int(($PRICE_NEAR + 1) * 10**24))")
+CB=$(near_bal_yocto "$CAROL")
+if python3 -c "import sys; sys.exit(0 if int('$CB') < $NEED else 1)"; then
+  near tokens "$ALICE" send-near "$CAROL" "$((${PRICE_NEAR%.*} + 1)) NEAR" network-config $NETWORK "${SIGN[@]}" >/dev/null 2>&1     && echo "(topped up carol with $((${PRICE_NEAR%.*} + 1)) NEAR from alice)"
+fi
 BEFORE_ONTIME=$(near_view "$FACTOR" payer_stats "{\"dao\":\"$DAO\"}" | jq -r '.paid_on_time // 0')
 ID=$(near_view "$FACTOR" config | jq -r .next_id)
 VAULT="inv-$ID.$FACTOR"
