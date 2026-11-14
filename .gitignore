@@ -1,0 +1,24 @@
+# secrets and local env
+.env
+.env.*
+!.env.example
+
+# build output
+target/
+node_modules/
+.next/
+out/
+web/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# logs, caches, editor and OS files
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.vercel/
+coverage/
