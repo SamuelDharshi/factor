@@ -87,7 +87,7 @@ check "vault holds the payment" "$(musdc_bal "$VAULT")" "$FACE"
 
 # ---- 6. Alice (old owner) tries to withdraw -> rejected
 near_tx "$ALICE" "$FACTOR" withdraw "{\"id\":\"$ID\"}" '150 Tgas' '1 yoctoNEAR'
-step 6 "Alice withdraws → ❌ rejected: NotOwner (expected)"
+step 6 "Payment held in the vault: only the current NFT owner can withdraw ✅"
 check "rejection reason is ERR_NOT_OWNER" "$(echo "$LAST_OUT" | grep -c ERR_NOT_OWNER | sed 's/^[1-9].*/found/')" found
 check "invoice still PAID, funds still in vault" "$(inv_field "$ID" status)/$(musdc_bal "$VAULT")" "Paid/$FACE"
 
