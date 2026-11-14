@@ -1,0 +1,8 @@
+{
+  "network": "testnet",
+  "factor": "factor.fctr6d9bf8.testnet",
+  "musdc": "musdc.fctr6d9bf8.testnet",
+  "dao": "fctr6d9bf8-dao.sputnik-v2.testnet",
+  "registry": "registry.fctr6d9bf8.testnet",
+  "vault_code_hash": "64WtqCUfEVtuu4JZt18k58WdfkjCzH6sGvZA5RU6m7X1"
+}
