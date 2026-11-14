@@ -71,30 +71,8 @@ A DAO's treasury, votes and payment history are all public on-chain, so a DAO is
 
 Who talks to what, and where the money moves:
 
-```
-                        +------------------------------+
-                        |        Sputnik DAO           |
-                        |   council 2-of-3 votes       |
-                        +-------+---------------+------+
-              (a) accept        |               | (d) pay 500 mUSDC
-              proposal          |               | proposal
-                                v               v
- +-------------+  (1) create  +--------------+   +---------------+
- | Contributor |------------->|   FACTOR     |   |     mUSDC     |
- |   (Alice)   |<-- NFT #42 --|  factor.near |   | (NEP-141 mock |
- +------+------+              | NFT + market |   |  stablecoin)  |
-        |                     | + payer stats|   +-------+-------+
-        | (b) list at         +---+------+---+           |
-        |     a discount          |      ^               | ft_on_transfer
-        v                         |      |               v
- +-------------+  (c) buy, NEAR   |      | mark_paid  +-----------------+
- |    Buyer    |------------------+      +------------| inv-42.factor   |
- | person/agent|                                       |  VAULT, 0 keys  |
- +------+------+      (e) withdraw: only NFT owner      | global contract |
-        +-----------------------------------------------> holds the money |
-                                                        +-----------------+
+<img width="818" height="667" alt="image" src="https://github.com/user-attachments/assets/dd53da7f-7987-4452-afec-d9866520604b" />
 
- NFT #42  <---- owns ---->  inv-42.factor   (whoever holds the NFT controls the money)
 ```
 
 ---
