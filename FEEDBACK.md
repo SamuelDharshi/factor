@@ -19,6 +19,7 @@ Our fix is small and shipped (existence preflight, no silent re-publish, refund 
 | # | Observation | Where it shows up in the repo |
 |---|---|---|
 | O1 | Pointing the factor at an unpublished hash (`HHZSâ€¦`) made `create_invoice` fail for the user with `GlobalContractDoesNotExist`. The factor accepted the hash without any check, because `set_vault_code_hash` stores whatever it is given. | `docs/DECISIONS.md` D12, `contracts/factor/src/lib.rs` (`set_vault_code_hash`) |
+| O1b | The failed call is on chain: [`2BEDBxW3…`](https://testnet.nearblocks.io/txns/2BEDBxW3SCT3HjdBL9XzD8N4HVye8367WUggTywjTvxp) (testnet, from `samstestnet.testnet`). The `create_invoice` call itself returned success, but one receipt failed with `GlobalContractDoesNotExist` for hash `HHZSzxxUYcXweET9A8w3s3rzAWW8yFJjb1gXVb6YoEiw` (action index 2, the `use_global_contract` step), and the factor logged `vault creation failed, invoice #2 voided`. So the wallet showed an error even though the transaction as a whole succeeded. | on-chain tx above |
 | O2 | The global publish had failed earlier, but our deploy script hid the failure. Nothing in the flow forced us to confirm that the hash existed before using it. That part was our own bug. | `scripts/deploy.sh` (fixed) |
 | O3 | cargo-near builds were not byte-reproducible between rebuilds in our setup, so the same source gave a different hash each time. | D12 |
 | O4 | Publishing a global contract burned about 11 NEAR for our 113 KB vault (about 10 NEAR per 100 KB). We found this out by paying it. | D12 |
@@ -91,7 +92,7 @@ How to measure success: a developer can publish, point a contract at the hash an
 | `scripts/deploy.sh` checks on chain that the vault hash exists before pointing the factor at it | Shipped |
 | The script keeps the published hash unless `NEW_VAULT=1`, so it never burns about 11 NEAR silently | Shipped |
 | The script exits with an error if a publish fails, instead of continuing | Shipped |
-| `on_vault_created` voids the invoice and refunds the creator if the vault cannot be created | In the contract. We did not write a dedicated test for the missing-hash case. |
+| `on_vault_created` voids the invoice and refunds the creator if the vault cannot be created | In the contract, and it ran on testnet in the failed call above (invoice #2 voided). We did not write a dedicated test for the missing-hash case. |
 | The factor uses the published hash `64WtqCUfEVtuu4JZt18k58WdfkjCzH6sGvZA5RU6m7X1`. Invoice creation works on testnet again and the 8-step demo passes. | Verified |
 | Reproducible build for a mainnet release (`cargo near build reproducible-wasm`) | Documented in D12, not used for the testnet deploy |
 | RPC fallback list and cache in the web app | Shipped |
@@ -106,6 +107,6 @@ How to measure success: a developer can publish, point a contract at the hash an
 ## 9. What we did not verify
 
 - We did not read the protocol source to confirm exactly where `GlobalContractDoesNotExist` is raised. We only saw the error and its effect for the user.
-- The wallet showed the error for the `create_invoice` call. We did not capture the exact receipt tree of that failed call.
+- We confirmed the failing receipt on chain (see O1b), but we did not check whether the creator's refund of the vault funding arrived in full.
 - We did not test whether a newer cargo-near release makes the build reproducible by default.
 - The proposals in section 5 are our suggestions. The NEAR team may already have some of them planned, or may know constraints we do not.
