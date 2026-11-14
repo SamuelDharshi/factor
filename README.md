@@ -577,11 +577,12 @@ Tech: Rust and near-sdk 5.30 for the contracts, near-sandbox and near-api for te
 - No partial payments: an underpayment is refunded in full. mUSDC sent to a vault with a plain `ft_transfer` (not `ft_transfer_call`) cannot be recovered.
 - A DAO that never pays is not punished on-chain beyond its public score. There is no collateral.
 - The payer score's "age" counts from the DAO's first accepted invoice, because a contract cannot read an account's creation time.
-- The implied APR uses a fixed demo rate (1 NEAR = 50 mUSDC).
+- Prices are in NEAR while the face value is in mUSDC, and the implied APR uses a fixed demo rate (1 NEAR = 50 mUSDC). A mainnet version would price both in USDC.
+- The payer score can be inflated by a DAO that pays invoices to its own members (circular volume). Possible fixes: weight the score by the number of distinct invoice creators, require collateral, or count only arm's-length payments.
 - The invoice page shows contract timestamps for its timeline. Transaction links are on the Live page instead, because no indexer is used.
 - The vault is about 113 KB, so publishing a new vault hash burns about 11 NEAR on testnet.
 - Agent strategies are published metadata and are not enforced by the contract.
-- The web UI has been rendered and checked against the live contracts, but its wallet flows are only partly tested with a real wallet.
+- The web UI runs against the live contracts. Registering an agent and creating an invoice were run from a real wallet; listing, buying and withdrawing from the browser wallet were not, and are shown by the scripted demo instead.
 
 **Future**
 
