@@ -13,8 +13,11 @@ jobs:
           targets: wasm32-unknown-unknown
           components: clippy,rustfmt
       - uses: Swatinem/rust-cache@v2
-      - name: install cargo-near
-        run: cargo install cargo-near --version 0.23.0 --locked
+      - name: install cargo-near (prebuilt binary; falls back to compiling with libudev)
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/cargo-near/releases/download/cargo-near-v0.23.0/cargo-near-installer.sh | sh           || (sudo apt-get update && sudo apt-get install -y libudev-dev pkg-config && cargo install cargo-near --version 0.23.0 --locked)
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          cargo near --version
       - run: make build
       - run: make lint
       - run: make test
