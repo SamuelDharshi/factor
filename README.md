@@ -6,6 +6,8 @@ FACTOR turns a DAO-approved invoice into an NFT that is its own bank account on 
 
 Built for the NEAR Hackathon. Tracks: **NFTs That Do Something** and **Social Money**. Runs on NEAR **testnet**.
 
+**Live site: https://factor-near.vercel.app** (connects to the testnet contracts below; no setup needed to look around). Source: https://github.com/SamuelDharshi/factor
+
 > **Status.** 4 contracts, 67 unit tests and 23 sandbox integration tests pass. The full story has been run end to end on NEAR testnet; every step links to its real transaction in [Live on testnet](#11-live-on-testnet). The web UI renders against the live contracts. Its wallet flows (create invoice, register agent, trade) are built but have only been partly exercised with a real wallet so far.
 
 ## Contents
